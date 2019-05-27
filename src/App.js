@@ -2,12 +2,12 @@ import React from "react";
 
 import "./App.css";
 
-import Increment from "./Increment";
+import Pokedex from "./Pokedex";
 
 export function App() {
   return (
     <main className="content">
-      <Increment />
+      <Pokedex />
     </main>
   );
 }

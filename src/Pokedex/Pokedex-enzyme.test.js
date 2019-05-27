@@ -3,7 +3,7 @@ import { mount } from "enzyme";
 import Axios from "axios";
 
 import cache from "./lib/cache";
-import Increment from "./IncrementClass";
+import Pokedex from "./PokedexClass";
 
 jest.mock("axios");
 
@@ -39,7 +39,7 @@ afterEach(() => {
 });
 
 test("user can see the first pokemon", async () => {
-  const wrapper = mount(<Increment />);
+  const wrapper = mount(<Pokedex />);
 
   await wait();
 
@@ -49,7 +49,7 @@ test("user can see the first pokemon", async () => {
 });
 
 test("user can click to see the next pokemon", async () => {
-  const wrapper = mount(<Increment />);
+  const wrapper = mount(<Pokedex />);
 
   await wait();
   wrapper.update();
@@ -70,7 +70,7 @@ test("user can click to see the next pokemon", async () => {
 });
 
 test("user can click to see the previous pokemon", async () => {
-  const wrapper = mount(<Increment />);
+  const wrapper = mount(<Pokedex />);
 
   await wait();
   wrapper.update();
@@ -106,7 +106,7 @@ test("user can click to see the previous pokemon", async () => {
 });
 
 test("user can click to see a random pokemon", async () => {
-  const wrapper = mount(<Increment />);
+  const wrapper = mount(<Pokedex />);
 
   await wait();
   wrapper.update();
@@ -125,7 +125,7 @@ test("user can click to see a random pokemon", async () => {
 });
 
 test("requests get cached after they run", async () => {
-  const wrapper = mount(<Increment />);
+  const wrapper = mount(<Pokedex />);
 
   await wait();
   wrapper.update();

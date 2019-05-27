@@ -8,7 +8,7 @@ import {
 import Axios from "axios";
 
 import cache from "./lib/cache";
-import Increment from "./IncrementClass";
+import Pokedex from "./PokedexClass";
 
 // Annoying Warning FIX PR: https://github.com/facebook/react/pull/14853
 
@@ -45,7 +45,7 @@ afterEach(() => {
 });
 
 test("user can see the first pokemon", async () => {
-  const { getByText } = render(<Increment />);
+  const { getByText } = render(<Pokedex />);
 
   const bulbasaur = await waitForElement(() => getByText(/bulbasaur/));
 
@@ -53,7 +53,7 @@ test("user can see the first pokemon", async () => {
 });
 
 test("user can click to see the next pokemon", async () => {
-  const { getByText } = render(<Increment />);
+  const { getByText } = render(<Pokedex />);
 
   const nextButton = await waitForElement(() => getByText("Next"));
 
@@ -65,7 +65,7 @@ test("user can click to see the next pokemon", async () => {
 });
 
 test("user can click to see the previous pokemon", async () => {
-  const { getByText } = render(<Increment />);
+  const { getByText } = render(<Pokedex />);
 
   const nextButton = await waitForElement(() => getByText("Next"));
 
@@ -85,7 +85,7 @@ test("user can click to see the previous pokemon", async () => {
 // This test is Flaky because if #1 or #2 get's randomly generated,
 // it shows bulbasaur or ivysaur
 test("user can click to see a random pokemon", async () => {
-  const { getByText } = render(<Increment />);
+  const { getByText } = render(<Pokedex />);
 
   const randomButton = await waitForElement(() => getByText("Random"));
 
@@ -97,7 +97,7 @@ test("user can click to see a random pokemon", async () => {
 });
 
 test("requests get cached after they run", async () => {
-  const { getByText } = render(<Increment />);
+  const { getByText } = render(<Pokedex />);
 
   const nextButton = await waitForElement(() => getByText("Next"));
 

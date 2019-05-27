@@ -4,14 +4,14 @@ import Axios from "axios";
 import cache from "./lib/cache";
 import Spinner from "../Spinner";
 
-import "./Increment.css";
+import "./Pokedex.css";
 
 // const ALL_POKEMON_MAX_ID = 809;
 const GEN_ONE_MAX_ID = 151;
 const MAX_ID = GEN_ONE_MAX_ID;
 const MIN_ID = 1;
 
-export default class IncrementClass extends React.Component {
+export default class PokedexClass extends React.Component {
   constructor(props) {
     super(props);
 
