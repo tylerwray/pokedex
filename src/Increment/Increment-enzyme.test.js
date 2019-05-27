@@ -28,9 +28,9 @@ beforeAll(() => {
       "https://pokeapi.co/api/v2/pokemon/2": ivysaur
     };
 
-    const value = idMap[url] || random;
+    const data = idMap[url] || random;
 
-    return Promise.resolve(value);
+    return Promise.resolve({ data });
   });
 });
 
@@ -57,7 +57,7 @@ test("user can click to see the next pokemon", async () => {
 
   wrapper
     .find("button")
-    .at(1)
+    .at(2)
     .simulate("click");
 
   await wait();
@@ -78,7 +78,7 @@ test("user can click to see the previous pokemon", async () => {
 
   wrapper
     .find("button")
-    .at(1)
+    .at(2)
     .simulate("click");
 
   await wait();
@@ -114,7 +114,7 @@ test("user can click to see a random pokemon", async () => {
 
   wrapper
     .find("button")
-    .at(2)
+    .at(1)
     .simulate("click");
 
   await wait();
@@ -133,7 +133,7 @@ test("requests get cached after they run", async () => {
 
   wrapper
     .find("button")
-    .at(1)
+    .at(2)
     .simulate("click");
 
   await wait();
@@ -151,7 +151,7 @@ test("requests get cached after they run", async () => {
 
   wrapper
     .find("button")
-    .at(1)
+    .at(2)
     .simulate("click");
 
   expect(wrapper.text()).toContain("ivysaur");

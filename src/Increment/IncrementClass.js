@@ -122,13 +122,24 @@ export default class IncrementClass extends React.Component {
         </div>
         <div className="buttons">
           <button className="previous" onClick={this.handlePrevious}>
-            ← Prev
+            <span role="img" alt="arrow previous">
+              ←{" "}
+            </span>
+            Prev
           </button>
           <button className="random" onClick={this.handleRandom}>
-            Random ♺
+            Random
+            <span role="img" alt="random">
+              {" "}
+              ♺
+            </span>
           </button>
           <button className="next" onClick={this.handleNext}>
-            Next →
+            Next
+            <span role="img" alt="arrow next">
+              {" "}
+              →
+            </span>
           </button>
         </div>
       </div>

@@ -33,9 +33,9 @@ beforeAll(() => {
       "https://pokeapi.co/api/v2/pokemon/2": ivysaur
     };
 
-    const value = idMap[url] || random;
+    const data = idMap[url] || random;
 
-    return Promise.resolve(value);
+    return Promise.resolve({ data });
   });
 });
 
@@ -82,6 +82,8 @@ test("user can click to see the previous pokemon", async () => {
   expect(bulbasaur).toBeInTheDocument();
 });
 
+// This test is Flaky because if #1 or #2 get's randomly generated,
+// it shows bulbasaur or ivysaur
 test("user can click to see a random pokemon", async () => {
   const { getByText } = render(<Increment />);
 

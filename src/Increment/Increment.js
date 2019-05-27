@@ -51,13 +51,24 @@ export default function Increment() {
       </div>
       <div className="buttons">
         <button className="previous" onClick={handlePrevious}>
-          ← Prev
+          <span role="img" alt="arrow previous">
+            ←{" "}
+          </span>
+          Prev
         </button>
         <button className="random" onClick={handleRandom}>
-          Random ♺
+          Random
+          <span role="img" alt="random">
+            {" "}
+            ♺
+          </span>
         </button>
         <button className="next" onClick={handleNext}>
-          Next →
+          Next
+          <span role="img" alt="arrow next">
+            {" "}
+            →
+          </span>
         </button>
       </div>
     </div>

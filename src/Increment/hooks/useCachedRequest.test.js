@@ -9,6 +9,7 @@ import useCachedRequest from "./useCachedRequest";
 
 jest.mock("axios");
 
+// Example Component using the useCachedRequest hook
 function Person({ id }) {
   const { data, loading } = useCachedRequest(
     `https://review-rocket.podium.com/api/v1/users/${id}`
@@ -43,9 +44,9 @@ beforeAll(() => {
       "https://review-rocket.podium.com/api/v1/users/2": eric
     };
 
-    const value = idMap[url];
+    const data = idMap[url];
 
-    return Promise.resolve(value);
+    return Promise.resolve({ data });
   });
 });
 
