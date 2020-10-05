@@ -1,5 +1,7 @@
 import React from "react";
-import { render, cleanup, fireEvent, screen } from "@testing-library/react";
+import { render, cleanup, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+
 import Axios from "axios";
 
 import cache from "./lib/cache";
@@ -50,7 +52,7 @@ test("user can click to see the next pokemon", async () => {
 
   const nextButton = await screen.findByText("Next");
 
-  fireEvent.click(nextButton);
+  userEvent.click(nextButton);
 
   const ivysaur = await screen.findByText(/ivysaur/);
 
@@ -62,13 +64,13 @@ test("user can click to see the previous pokemon", async () => {
 
   const nextButton = await screen.findByText("Next");
 
-  fireEvent.click(nextButton);
+  userEvent.click(nextButton);
 
   const ivysaur = await screen.findByText(/ivysaur/);
 
   expect(ivysaur).toBeInTheDocument();
 
-  fireEvent.click(screen.getByText("Prev"));
+  userEvent.click(screen.getByText("Prev"));
 
   const bulbasaur = await screen.findByText(/bulbasaur/);
 
@@ -82,7 +84,7 @@ test("user can click to see a random pokemon", async () => {
 
   const randomButton = await screen.findByText("Random");
 
-  fireEvent.click(randomButton);
+  userEvent.click(randomButton);
 
   const random = await screen.findByText(/random/);
 
@@ -94,21 +96,21 @@ test("requests get cached after they run", async () => {
 
   const nextButton = await screen.findByText("Next");
 
-  fireEvent.click(nextButton);
+  userEvent.click(nextButton);
 
   const ivysaur = await screen.findByText(/ivysaur/);
 
   expect(ivysaur).toBeInTheDocument();
 
-  fireEvent.click(screen.getByText("Prev"));
+  userEvent.click(screen.getByText("Prev"));
 
   expect(screen.getByText(/bulbasaur/)).toBeInTheDocument();
 
-  fireEvent.click(screen.getByText("Next"));
+  userEvent.click(screen.getByText("Next"));
 
   expect(screen.getByText(/ivysaur/)).toBeInTheDocument();
 
-  fireEvent.click(screen.getByText("Prev"));
+  userEvent.click(screen.getByText("Prev"));
 
   expect(screen.getByText(/bulbasaur/)).toBeInTheDocument();
 });

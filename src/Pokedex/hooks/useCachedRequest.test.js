@@ -1,5 +1,5 @@
 import React from "react";
-import { render, cleanup, waitForElement } from "@testing-library/react";
+import { render, cleanup, screen } from "@testing-library/react";
 import Axios from "axios";
 
 import cache from "../lib/cache";
@@ -28,20 +28,20 @@ function Person({ id }) {
 const arthur = {
   id: "1",
   name: "Arthur",
-  email: "adog@factsaboutme.com"
+  email: "adog@factsaboutme.com",
 };
 
 const eric = {
   id: "2",
   name: "Eric",
-  email: "i-am-ceo@podium.com"
+  email: "i-am-ceo@podium.com",
 };
 
 beforeAll(() => {
-  Axios.get.mockImplementation(url => {
+  Axios.get.mockImplementation((url) => {
     const idMap = {
       "https://review-rocket.podium.com/api/v1/users/1": arthur,
-      "https://review-rocket.podium.com/api/v1/users/2": eric
+      "https://review-rocket.podium.com/api/v1/users/2": eric,
     };
 
     const data = idMap[url];
@@ -56,23 +56,24 @@ afterEach(() => {
 });
 
 test("requests get cached after they run", async () => {
-  const { getByText, queryByText, rerender } = render(<Person id="1" />);
-  expect(getByText("loading")).toBeInTheDocument();
-  await waitForElement(() => getByText(arthur.name));
-  expect(getByText(arthur.email)).toBeInTheDocument();
+  const { rerender } = render(<Person id="1" />);
+
+  expect(screen.getByText("loading")).toBeInTheDocument();
+  await screen.findByText(arthur.name);
+  expect(screen.getByText(arthur.email)).toBeInTheDocument();
 
   rerender(<Person id="2" />);
-  expect(getByText("loading")).toBeInTheDocument();
-  await waitForElement(() => getByText(eric.name));
-  expect(getByText(eric.email)).toBeInTheDocument();
+  expect(screen.getByText("loading")).toBeInTheDocument();
+  await screen.findByText(eric.name);
+  expect(screen.getByText(eric.email)).toBeInTheDocument();
 
   rerender(<Person id="1" />);
-  expect(queryByText("loading")).not.toBeInTheDocument();
-  expect(getByText(arthur.name)).toBeInTheDocument();
-  expect(getByText(arthur.email)).toBeInTheDocument();
+  expect(screen.queryByText("loading")).not.toBeInTheDocument();
+  expect(screen.getByText(arthur.name)).toBeInTheDocument();
+  expect(screen.getByText(arthur.email)).toBeInTheDocument();
 
   rerender(<Person id="2" />);
-  expect(queryByText("loading")).not.toBeInTheDocument();
-  expect(getByText(eric.name)).toBeInTheDocument();
-  expect(getByText(eric.email)).toBeInTheDocument();
+  expect(screen.queryByText("loading")).not.toBeInTheDocument();
+  expect(screen.getByText(eric.name)).toBeInTheDocument();
+  expect(screen.getByText(eric.email)).toBeInTheDocument();
 });
