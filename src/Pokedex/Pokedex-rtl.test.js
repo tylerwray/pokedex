@@ -1,36 +1,29 @@
 import React from "react";
-import {
-  render,
-  cleanup,
-  fireEvent,
-  waitForElement
-} from "react-testing-library";
+import { render, cleanup, fireEvent, screen } from "@testing-library/react";
 import Axios from "axios";
 
 import cache from "./lib/cache";
 import Pokedex from "./PokedexClass";
 
-// Annoying Warning FIX PR: https://github.com/facebook/react/pull/14853
-
 jest.mock("axios");
 
 const bulbasaur = {
-  name: "bulbasaur"
+  name: "bulbasaur",
 };
 
 const ivysaur = {
-  name: "ivysaur"
+  name: "ivysaur",
 };
 
 const random = {
-  name: "random"
+  name: "random",
 };
 
 beforeAll(() => {
-  Axios.get.mockImplementation(url => {
+  Axios.get.mockImplementation((url) => {
     const idMap = {
       "https://pokeapi.co/api/v2/pokemon/1": bulbasaur,
-      "https://pokeapi.co/api/v2/pokemon/2": ivysaur
+      "https://pokeapi.co/api/v2/pokemon/2": ivysaur,
     };
 
     const data = idMap[url] || random;
@@ -45,39 +38,39 @@ afterEach(() => {
 });
 
 test("user can see the first pokemon", async () => {
-  const { getByText } = render(<Pokedex />);
+  render(<Pokedex />);
 
-  const bulbasaur = await waitForElement(() => getByText(/bulbasaur/));
+  const bulbasaur = await screen.findByText(/bulbasaur/);
 
   expect(bulbasaur).toBeInTheDocument();
 });
 
 test("user can click to see the next pokemon", async () => {
-  const { getByText } = render(<Pokedex />);
+  render(<Pokedex />);
 
-  const nextButton = await waitForElement(() => getByText("Next"));
+  const nextButton = await screen.findByText("Next");
 
   fireEvent.click(nextButton);
 
-  const ivysaur = await waitForElement(() => getByText(/ivysaur/));
+  const ivysaur = await screen.findByText(/ivysaur/);
 
   expect(ivysaur).toBeInTheDocument();
 });
 
 test("user can click to see the previous pokemon", async () => {
-  const { getByText } = render(<Pokedex />);
+  render(<Pokedex />);
 
-  const nextButton = await waitForElement(() => getByText("Next"));
+  const nextButton = await screen.findByText("Next");
 
   fireEvent.click(nextButton);
 
-  const ivysaur = await waitForElement(() => getByText(/ivysaur/));
+  const ivysaur = await screen.findByText(/ivysaur/);
 
   expect(ivysaur).toBeInTheDocument();
 
-  fireEvent.click(getByText("Prev"));
+  fireEvent.click(screen.getByText("Prev"));
 
-  const bulbasaur = await waitForElement(() => getByText(/bulbasaur/));
+  const bulbasaur = await screen.findByText(/bulbasaur/);
 
   expect(bulbasaur).toBeInTheDocument();
 });
@@ -85,37 +78,37 @@ test("user can click to see the previous pokemon", async () => {
 // This test is Flaky because if #1 or #2 get's randomly generated,
 // it shows bulbasaur or ivysaur
 test("user can click to see a random pokemon", async () => {
-  const { getByText } = render(<Pokedex />);
+  render(<Pokedex />);
 
-  const randomButton = await waitForElement(() => getByText("Random"));
+  const randomButton = await screen.findByText("Random");
 
   fireEvent.click(randomButton);
 
-  const random = await waitForElement(() => getByText(/random/));
+  const random = await screen.findByText(/random/);
 
   expect(random).toBeInTheDocument();
 });
 
 test("requests get cached after they run", async () => {
-  const { getByText } = render(<Pokedex />);
+  render(<Pokedex />);
 
-  const nextButton = await waitForElement(() => getByText("Next"));
+  const nextButton = await screen.findByText("Next");
 
   fireEvent.click(nextButton);
 
-  const ivysaur = await waitForElement(() => getByText(/ivysaur/));
+  const ivysaur = await screen.findByText(/ivysaur/);
 
   expect(ivysaur).toBeInTheDocument();
 
-  fireEvent.click(getByText("Prev"));
+  fireEvent.click(screen.getByText("Prev"));
 
-  expect(getByText(/bulbasaur/)).toBeInTheDocument();
+  expect(screen.getByText(/bulbasaur/)).toBeInTheDocument();
 
-  fireEvent.click(getByText("Next"));
+  fireEvent.click(screen.getByText("Next"));
 
-  expect(getByText(/ivysaur/)).toBeInTheDocument();
+  expect(screen.getByText(/ivysaur/)).toBeInTheDocument();
 
-  fireEvent.click(getByText("Prev"));
+  fireEvent.click(screen.getByText("Prev"));
 
-  expect(getByText(/bulbasaur/)).toBeInTheDocument();
+  expect(screen.getByText(/bulbasaur/)).toBeInTheDocument();
 });
