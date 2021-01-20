@@ -5,8 +5,6 @@ import Axios from "axios";
 import cache from "../lib/cache";
 import useCachedRequest from "./useCachedRequest";
 
-// Annoying Warning FIX PR: https://github.com/facebook/react/pull/14853
-
 jest.mock("axios");
 
 // Example Component using the useCachedRequest hook
